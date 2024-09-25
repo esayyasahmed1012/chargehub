@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const auth_routes = require('./routes/auth_routes');
 const station_routes = require('./routes/station_routes');
 const session_routes = require('./routes/session_routes');
+const portable_charger_routes = require('./routes/portable_charger_routes');
 const app = express();
 
 // middleware
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 app.use('/auth', auth_routes);
 // Charging Station Routes
 app.use('/api', station_routes);
+//portabe Chargers route
+app.use('/api/chargers', portable_charger_routes);
 
 // Charging Session Routes
 app.use('/api', session_routes);
