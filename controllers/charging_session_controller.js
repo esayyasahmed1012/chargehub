@@ -2,7 +2,7 @@ const charging_sessions = require('../models/charging_sessions_model');
 const charging_stations = require('../models/charging_station_model');
 
 // Start a new charging session
-exports.startSession = async (req, res) => {
+exports.start_session = async (req, res) => {
   const { user_id, station_id } = req.body;
   try {
     await charging_sessions.create(user_id, station_id);
@@ -14,7 +14,7 @@ exports.startSession = async (req, res) => {
 };
 
 // End a charging session
-exports.endSession = async (req, res) => {
+exports.end_session = async (req, res) => {
   const { session_id, cost, station_id } = req.body;
   try {
     await charging_sessions.end(session_id, cost);

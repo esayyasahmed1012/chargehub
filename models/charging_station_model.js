@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
 const charging_stations = {
-  // creating a new charging station
-  create: (station_name, location) => {
+  // Creating a new charging station with latitude and longitude
+  create: (station_name, latitude, longitude) => {
     return new Promise((resolve, reject) => {
       db.query(
-        'INSERT INTO charging_stations (station_name, location, status) VALUES (?, ?, "available")',
-        [station_name, location],
+        'INSERT INTO charging_stations (station_name, latitude, longitude, status) VALUES (?, ?, ?, "available")',
+        [station_name, latitude, longitude],
         (err, result) => {
           if (err) reject(err);
           resolve(result);
@@ -15,7 +15,7 @@ const charging_stations = {
     });
   },
 
-  // get all the charging sttions
+  // Get all the charging stations
   getAll: () => {
     return new Promise((resolve, reject) => {
       db.query('SELECT * FROM charging_stations', (err, results) => {
@@ -25,7 +25,7 @@ const charging_stations = {
     });
   },
 
-  // updating the charging stations
+  // Updating the status of a charging station
   updateStatus: (station_id, status) => {
     return new Promise((resolve, reject) => {
       db.query(

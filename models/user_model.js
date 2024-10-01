@@ -18,12 +18,17 @@ const User = {
   // Find user by email
   findByEmail: (email) => {
     return new Promise((resolve, reject) => {
+      console.log('Querying for user with email:', email); // Log the email being queried
       db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
-        if (err) reject(err);
+        if (err) {
+          console.error('Error querying the database:', err); // Log any database errors
+          return reject(err);
+        }
+        console.log('Query result:', result); 
         resolve(result[0]);
       });
     });
-  }
+  } 
 };
 
 module.exports = User;

@@ -1,6 +1,6 @@
 const express = require('express');
 const portable_charger_controller = require('../controllers/portable_charger_controller');
-const { isAuthenticated, isAdmin } = require('../middleware/auth');
+const { isAuthenticated, isAdmin } = require('../middlewares/auth');
 const router = express.Router();
 
 // Create a new portable charger (Admin only)
