@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // Register a new user
 const bcrypt = require('bcrypt');
 
-
+// Register a new user
 exports.register = async (req, res) => {
   const { username, email, password, phone_number, role } = req.body;
   try {
@@ -26,6 +26,7 @@ exports.register = async (req, res) => {
     }
   }
 };
+
 exports.login = async (req, res) => {
   console.log('Login attempt:', req.body); // Log incoming request
   const { email, password } = req.body;
