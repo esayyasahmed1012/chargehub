@@ -19,23 +19,24 @@ const User = {
         console.error('Error during DB insert:', err); // Log any errors
         reject(err); // Reject the promise with error
       }
-    });
+     });
   },
 
   // Find user by email
-  findByEmail: (email) => {
-    return new Promise((resolve, reject) => {
-      console.log('Querying for user with email:', email); // Log the email being queried
-      db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
-        if (err) {
-          console.error('Error querying the database:', err); // Log any database errors
-          return reject(err);
-        }
-        console.log('Query result:', result); 
-        resolve(result[0]);
-      });
-    });
-  } 
+  
+  findByEmail: async (email) => {
+    try {
+      console.log('Executing query...');
+      const [results] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+      console.log('DB query results:', results);
+      return results.length > 0 ? results[0] : null; // Return the first result or null
+    } catch (err) {
+      console.error('Error during DB query:', err);
+      throw err; // Rethrow to handle in calling function
+    }
+  }
+  
+  
 };
 
 module.exports = User;
