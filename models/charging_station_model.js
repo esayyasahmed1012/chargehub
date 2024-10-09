@@ -62,7 +62,7 @@ const charging_stations = {
   },
 
   // Updating the status of a charging station
-  updateStatus: (station_id, status) => {
+  updateStatus: async(station_id, status) => {
     return new Promise((resolve, reject) => {
       db.query(
         'UPDATE charging_stations SET status = ? WHERE station_id = ?',
@@ -73,6 +73,14 @@ const charging_stations = {
         }
       );
     });
+  },
+  DeleteStation: async(station_name) => {
+    try{
+        const [results] = await db.execute('DELETE FROM charging_stations WHERE station_name = ?', [station_name]);
+        console.log(`station with a name ${station_name} is removed`)
+      } catch (err) {
+        throw err; 
+      }
   }
 };
 
