@@ -46,13 +46,19 @@ const charging_stations = {
   },
   
   // Get all the charging stations
-  getAll: () => {
-    return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM charging_stations', (err, results) => {
-        if (err) reject(err);
-        resolve(results);
-      });
-    });
+  getAll: async() => {
+    // return new Promise((resolve, reject) => {
+    //   db.query('SELECT * FROM charging_stations', (err, results) => {
+    //     if (err) reject(err);
+    //     resolve(results);
+    //   });
+    // });
+    try{
+      const [results] = await db.execute('SELECT * FROM charging_stations');
+      return results // Return the first result or null
+    } catch (err) {
+      throw err; // Rethrow to handle in calling function
+    }
   },
 
   // Updating the status of a charging station
