@@ -63,16 +63,22 @@ const charging_stations = {
 
   // Updating the status of a charging station
   updateStatus: async(station_id, status) => {
-    return new Promise((resolve, reject) => {
-      db.query(
-        'UPDATE charging_stations SET status = ? WHERE station_id = ?',
-        [status, station_id],
-        (err, result) => {
-          if (err) reject(err);
-          resolve(result);
-        }
-      );
-    });
+    // return new Promise((resolve, reject) => {
+    //   db.query(
+    //     'UPDATE charging_stations SET status = ? WHERE station_id = ?',
+    //     [status, station_id],
+    //     (err, result) => {
+    //       if (err) reject(err);
+    //       resolve(result);
+    //     }
+    //   );
+    // });
+    try{
+      const [result]=await db.execute('UPDATE charging_stations SET status = ? WHERE station_id = ?',[status, station_id])
+      return result;
+    }catch(err){
+      throw(err)
+    }
   },
   DeleteStation: async(station_name) => {
     try{
@@ -81,7 +87,10 @@ const charging_stations = {
       } catch (err) {
         throw err; 
       }
-  }
+  },
+
 };
+
+
 
 module.exports = charging_stations;
