@@ -29,3 +29,22 @@ exports.getStations = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving charging stations', error });
   }
 };
+
+exports.UpdateStationStatus= async(req, res)=>{
+  const{station_id}=req.params;
+  const{status}=req.body;
+  try{
+    if(!station_id || !status){
+      return res.status(400).json({message:"missing station id or status"})
+    }
+    const result=await charging_station_model.updateStatus(status,station_id)
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Station not found' });
+    }
+    console.log("Station status updated successfully")
+    res.status(200).json({ message: 'Station status updated successfully' });
+  }catch (error){
+    console.error('Error updating station status:', error);
+    res.status(500).json({ message: 'Error updating station status', error: error.message });
+  }
+}
