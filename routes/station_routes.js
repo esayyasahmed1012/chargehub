@@ -7,5 +7,7 @@ router.post('/stations', isAuthenticated, isAdmin , charging_station_controller.
 
 // geting all chargin stations
 router.get('/stations', isAuthenticated, charging_station_controller.getStations);
-router.put('/stations', isAuthenticated, isAdmin , charging_station_controller.createStation);
+// router.put('/stations', isAuthenticated, isAdmin , charging_station_controller.createStation);
+router.put('/stations/:station_id/status', isAuthenticated, isAdmin, charging_station_controller.UpdateStationStatus);
+
 module.exports = router;
