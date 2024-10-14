@@ -6,19 +6,21 @@ exports.start_session = async (req, res) => {
   const { user_id, station_id } = req.body;
   try {
     await charging_sessions.create(user_id, station_id);
-    await charging_stations.updateStatus(station_id, 'unavailable');
+    await charging_stations.updateStatus(station_id, "occupied");
+    console.log("sessioin created")
     res.status(201).json({ message: 'Charging session started successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error starting charging session', error });
   }
 };
 
-// End a charging session
+
 exports.end_session = async (req, res) => {
   const { session_id, cost, station_id } = req.body;
   try {
     await charging_sessions.end(session_id, cost);
     await charging_stations.updateStatus(station_id, 'available');
+    console.log("ending session")
     res.status(200).json({ message: 'Charging session ended successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error ending charging session', error });
